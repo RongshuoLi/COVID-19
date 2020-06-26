@@ -11,14 +11,14 @@
         
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         
-        <script src="data.js"></script>
+        <script src="06-15-2020.js"></script>
         
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
-        integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
-        crossorigin=""/>
+  integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+  crossorigin=""/>
         <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
-        integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
-        crossorigin=""></script>
+  integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+  crossorigin=""></script>
         
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.js" integrity="sha256-nZaxPHA2uAaquixjSDX19TmIlbRNCOrf5HO1oHl5p70=" crossorigin="anonymous"></script>
         
@@ -26,12 +26,12 @@
         
         <style>
             .nav-wrapper {
-                background-color: lightskyblue;
+                background-color: grey;
                 padding-left: 20px;
             }
             
             .page-footer {
-                background-color: deepskyblue;
+                background-color: grey;
             }
             
         </style>
@@ -66,7 +66,7 @@
         <h1>Covid-19 Dashboard</h1>
         <p class="container">This software will provide timely info about the pandemic.</p>
         <a href="http://cnn.com" target="_blank">CNN</a><br>
-        <img src="xia.jpg" style="width:300px; padding: 20px"> <!-- inline -->
+        <img src="pikachu.jpg" style="width:300px; padding: 20px"> <!-- inline -->
     
         <footer class="page-footer">
           <div class="container">
@@ -88,7 +88,7 @@
           </div>
           <div class="footer-copyright">
             <div class="container">
-            © 2020 Copyright 
+            © 2020 Copyright mhoel
             <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
             </div>
           </div>
@@ -102,19 +102,20 @@
         makemap();
         makechart();
         
-        function makelist() 
-        {
+        function makelist() {
+            
+            //data = [{pname:"NYC",cname:"USA",conf:218000},{pname:"Moscow",cname:"Russia",conf:212000},{pname:"Sao Paulo",cname:"Brazil",conf:100000}];
+            
             mylist = document.getElementById("mylist");
+            
             myhtml = "<ul class='collection'><h3>Top 5</h3>";
-            for (i=0; i<5;i++) 
-            {
+            // 3 parts of c for loop - 1) counter 2) loop cond. 3) increment or decrement
+            for (i=0; i<5;i++) {
                 myhtml = myhtml + "<li class='collection-item avatar'>";
                 myhtml = myhtml + "<i class='material-icons circle'>adb</i>"
-                if (data[i]['pname'] == "") 
-                {
+                if (data[i]['pname'] == "") {
                     myhtml = myhtml + "<b>" + data[i]['cname'] + "</b><br>";
-                } else 
-                {
+                } else {
                     myhtml = myhtml + "<b>" + data[i]['pname'] + ", " + data[i]['cname'] + "</b><br>";
                 }
                 myhtml = myhtml + data[i]['conf'] + "</li>";
@@ -126,19 +127,21 @@
         }
         
         
-        function makemap() 
-        {
-            var map = L.map('map').setView([30,0], 1.5) L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/light_all/{z}/{x}/{y}.png',
+        function makemap() {
+            
+            // step 3 - initialize the map
+            var map = L.map('map').setView([30,0], 1.5);
+
+            // step 4 load a tile layer
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/light_all/{z}/{x}/{y}.png',
             {
               maxZoom: 17,
               minZoom: 1
             }).addTo(map);
         
             // step 5 
-            for (i=0;i<data.length;i++) 
-            {
-                L.circle([data[i]['lat'], data[i]['lon']], 
-                {
+            for (i=0;i<data.length;i++) {
+                L.circle([data[i]['lat'], data[i]['lon']], {
                 color: 'red',
                 fillColor: '#f03',
                 fillOpacity: 0.5,
@@ -147,8 +150,7 @@
             }
         }
         
-        function makechart() 
-        {
+        function makechart() {
             
             labels = ['nyc','moscow','france','iran','turkey'];
             data = [210000,207000,150000,120000,75000];
