@@ -1,5 +1,5 @@
   
-fileobj = open("06-15-2020.csv","r") # r,w or a are the options
+fileobj = open("data.csv","r") # r,w or a are the options
 delfirst = fileobj.readline()
 datalist = fileobj.readlines()
 fileobj.close()
@@ -19,6 +19,6 @@ for country in datalist:
 
 #print(conflist)
 conflist.sort(key=lambda s: s['conf'], reverse=True)
-fileout = open("06-15-2020.js","w")
+fileout = open("data.js","w")
 fileout.write("data = " + str(conflist))
 fileout.close()
