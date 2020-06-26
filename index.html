@@ -14,11 +14,11 @@
         <script src="data.js"></script>
         
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
-        integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL   9wQ=="
-        crossorigin=""/>
+  integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+  crossorigin=""/>
         <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
-        integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
-        crossorigin=""></script>
+  integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+  crossorigin=""></script>
         
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.js" integrity="sha256-nZaxPHA2uAaquixjSDX19TmIlbRNCOrf5HO1oHl5p70=" crossorigin="anonymous"></script>
         
@@ -34,6 +34,21 @@
                 background-color: skyblue;
             }
             
+            /* The Modal (background) */
+            .modal {
+              display: none; /* Hidden by default */
+              
+            }
+
+            /* Modal Content/Box */
+            .modal-content {
+              background-color: #fefefe;
+              margin: 15% auto; /* 15% from the top and centered */
+              padding: 20px;
+              border: 1px solid #888;
+              width: 80%; /* Could be more or less, depending on screen size */
+            }
+            
         </style>
         
     </head>
@@ -42,6 +57,7 @@
         
         <nav>
             <div class="nav-wrapper">
+              
               <a href="#" class="brand-logo"><i class="material-icons">android</i></a>
               <ul id="nav-mobile" class="right hide-on-med-and-down">
                 <li><a href="sass.html">Data</a></li>
@@ -51,23 +67,25 @@
             </div>
         </nav>
         
-        <div class="row">
+        <h5 style="margin-left: 10px">Top 5 Covid-19</h5>
+        
+        <div class="row" style="margin: 10px; border-style: solid; border-bottom-width: 1; border-color: gainsboro;">
             
-          <div class="col s12 m3 l3" >
+          <div id="map" style="height:500px; padding:10px" class="col s12 m6 l6">Map</div>
+            
+          <div class="col s12 m6 l6" >
             <canvas id="chartjs-2"></canvas>
+            <!--<div  id="mylist"></div>-->
+            <div class="card" style="margin:15px">
+                <div class="card-content">
+                  <span class="card-title">Explanation</span>
+                  <p>These cities and countries are the most affected geographic areas on earth according to John Hopkins University.</p>
+                </div>
+            </div>
           </div>
-            
-          <div id="map" style="height:500px;" class="col s12 m6 l6 orange">Map</div>
-            
-          <div class="col s12 m3 l3 yellow" id="mylist"></div>
-            
+   
         </div>
         
-        <h1>Covid-19 Dashboard</h1>
-        <p class="container">This software will provide timely info about the pandemic.</p>
-        <a href="http://cnn.com" target="_blank">CNN</a><br>
-        <img src="xia.jpg" style="width:300px; padding: 20px"> <!-- inline -->
-    
         <footer class="page-footer">
           <div class="container">
             <div class="row">
@@ -93,19 +111,37 @@
             </div>
           </div>
         </footer>
+        
+        <div id="myModal" class="modal">
+
+          <!-- Modal content -->
+          <div class="modal-content">
+            <p id="modaltext"></p>
+          </div>
+
+        </div>
     
     </body>
     
     <script>
         
-        makelist();
+        mycolors = ['red','green','blue','orange','yellow'];
+        myrgb = ['rgba(255,0,0,0.2)','rgba(0,255,0,0.2)','rgba(0,0,255,0.2)','rgba(252,186,3,0.2)','rgba(252,248,3,0.2)']
+        myrgbouts = ['rgb(255,0,0)','rgb(0,255,0)','rgb(0,0,255)','rgb(252,186,3)','rgb(252,248,3)']
+        
+        //makelist2();
         makemap();
         makechart();
+    
         
         function makelist() {
+            
+            //data = [{pname:"NYC",cname:"USA",conf:218000},{pname:"Moscow",cname:"Russia",conf:212000},{pname:"Sao Paulo",cname:"Brazil",conf:100000}];
+            
             mylist = document.getElementById("mylist");
             
             myhtml = "<ul class='collection'><h3>Top 5</h3>";
+            // 3 parts of c for loop - 1) counter 2) loop cond. 3) increment or decrement
             for (i=0; i<5;i++) {
                 myhtml = myhtml + "<li class='collection-item avatar'>";
                 myhtml = myhtml + "<i class='material-icons circle'>adb</i>"
@@ -122,33 +158,117 @@
             
         }
         
+        function makelist2() {
+            
+            mylist = document.getElementById("mylist");
+            
+            //myhtml = "<ul class='collection'><h3>Top 5</h3>";
+            
+            // 3 parts of c for loop - 1) counter 2) loop cond. 3) increment or decrement
+            
+            myhtml = "<span><i class='material-icons'>sentiment_very_dissatisfied</i>"
+            for (i=0; i<5;i++) {
+                if (data[i]['pname'] == "") {
+                    myhtml = myhtml + "<b>" + data[i]['cname'] + "</b><br>";
+                } else {
+                    myhtml = myhtml + "<b>" + data[i]['pname'] + ", " + data[i]['cname'] + "</b><br>";
+                }
+            }
+            myhtml = myhtml + "</span>";
+            
+            mylist.innerHTML = myhtml;
+            
+        }
+        
         
         function makemap() {
             
+            // step 3 - initialize the map
             var map = L.map('map').setView([30,0], 1.5);
+
+            // step 4 load a tile layer
             L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/light_all/{z}/{x}/{y}.png',
             {
               maxZoom: 17,
               minZoom: 1
             }).addTo(map);
         
-            for (i=0;i<data.length;i++) {
+            // step 5 
+            
+            
+            for (i=0;i<5;i++) {
+                
+                if (data[i]['pname'] == "") {
+                    bindy = "<h6>" + data[i]['cname'] + ": <h6>" + data[i]['conf'];
+                } else {
+                    bindy = "<h6>" + data[i]['pname'] + ", " + data[i]['cname'] + ": <h6>" + data[i]['conf']
+                }
+                
                 L.circle([data[i]['lat'], data[i]['lon']], {
-                color: 'red',
-                fillColor: '#f03',
-                fillOpacity: 0.5,
-                radius: data[i]['conf'] * 2
-                }).bindPopup(data[i]['cname'] + ": " + data[i]['conf'], { maxWidth: "auto"}).addTo(map);
+                color: mycolors[i],
+                //fillColor: rgb(255,0,0),
+                fillOpacity: 0.2,
+                radius: data[i]['conf'] * 5
+                }).bindPopup("<img src='" + data[i]['cname'] + ".jpg'>" + bindy, { maxWidth: "auto"}).addTo(map);
             }
         }
         
         function makechart() {
             
-            labels = ['nyc','moscow','france','iran','turkey'];
-            data = [210000,207000,150000,120000,75000];
+            //labels = ['nyc','moscow','france','iran','turkey'];
+            //mydata = [210000,207000,150000,120000,75000];
 
-            new Chart(document.getElementById("chartjs-2"),{"type":"horizontalBar","data":{"labels": labels,"datasets":[{"label":"My First Dataset","data": data,"fill":false,"backgroundColor":["rgba(0, 255, 0, .5)","rgba(255, 159, 64, 0.2)","rgba(255, 205, 86, 0.2)","rgba(75, 192, 192, 0.2)","rgba(54, 162, 235, 0.2)","rgba(153, 102, 255, 0.2)","rgba(201, 203, 207, 0.2)"],"borderColor":["rgb(255, 99, 132)","rgb(255, 159, 64)","rgb(255, 205, 86)","rgb(75, 192, 192)","rgb(54, 162, 235)","rgb(153, 102, 255)","rgb(201, 203, 207)"],"borderWidth":1}]},"options":{"scales":{"xAxes":[{"ticks":{"beginAtZero":true}}]}}});
+            label5 = [];
+            data5 = [];
+            for (i=0;i<5;i++) {
+                if (data[i]['pname'] != "") {
+                   label5.push(data[i]['pname'] + ", " + data[i]['cname']); 
+                } else {
+                   label5.push(data[i]['cname']); 
+                }
+                data5.push(data[i]['conf']);
+            }
             
+            
+            chart = new Chart(document.getElementById("chartjs-2"),{"type":"horizontalBar","data":{"labels": label5,"datasets":[{"label":"", "data": data5,"fill":false,"backgroundColor":myrgb,"borderColor":myrgbouts, "borderWidth":1}]} ,"options":{"scales":{"xAxes":[{"ticks":{"beginAtZero":true}}]},
+            onClick:function(e, items){
+            if ( items.length == 0 ) return; //Clicked outside any bar.
+            //openModal(items[0]['_model']['label']);
+            console.log(items[i]['_model']['label'])
+            },tooltips: {
+                custom: function(tooltip) {
+                    if (!tooltip) return;
+                    // disable displaying the color box;
+                    tooltip.displayColors = false;
+                  },
+                callbacks: {
+                    label: function(tooltipItem) {
+                        return "Cases: " + tooltipItem.xLabel;
+                    }
+                }   
+            },
+            title: {
+                  display: true,
+                  text: 'Confirmed cases',
+                  position: 'top'
+            }
+            }                                                       
+            });
+            
+        }
+        
+        function openModal(place) {
+            var modal = document.getElementById("myModal");
+            var modaltext = document.getElementById("modaltext");
+            modal.style.display = "block";
+            modaltext.innerHTML = place;
+        }
+        
+        window.onclick = function(event) {
+          var modal = document.getElementById("myModal");
+          if (event.target == modal) {
+            modal.style.display = "none";
+          }
         }
     
         
