@@ -1,1 +1,1 @@
-# COVID-
+# COVID-19 project
