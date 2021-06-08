@@ -1,5 +1,4 @@
-  
-fileobj = open("data.csv","r") # r,w or a are the options
+fileobj = open("final_dataset.csv","r") # r,w or a are the options
 delfirst = fileobj.readline()
 datalist = fileobj.readlines()
 fileobj.close()
@@ -10,7 +9,7 @@ for country in datalist:
     #print(country)
     templist = country.split(",")
     pname = templist[2]
-    cname = templist[3]
+    cname = templist[1]
     lat = templist[5]
     lon = templist[6]
     conf = int(templist[7])
