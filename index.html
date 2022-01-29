@@ -56,9 +56,9 @@
             <canvas id="chartjs-2"></canvas>
           </div>
             
-          <div id="map" style="height:520px;" class="col s12 m6 l6 blue">Map</div>
+          <div id="map" style="height:520px;" class="col s12 m6 l6 white">Map</div>
             
-          <div class="col s12 m3 l3 gray" id="mylist"></div>
+          <div class="col s12 m3 l3 white" id="mylist"></div>
             
         </div>
         
@@ -93,7 +93,7 @@ loss of taste or smell.</p>
           <div class="footer-copyright">
             <div class="container">
             © 2022 Copyright
-            <a class="grey-text text-lighten-4 right" href="https://www.google.com/search?q=covid&rlz=1C1CHBF_enCA885CA885&oq=covid&aqs=chrome.0.69i59j0l2j69i60l3j69i65j69i60.1887j0j7&sourceid=chrome&ie=UTF-8">General Covid</a>
+            <a class="white-text" href="https://www.google.com/search?q=covid&rlz=1C1CHBF_enCA885CA885&oq=covid&aqs=chrome.0.69i59j0l2j69i60l3j69i65j69i60.1887j0j7&sourceid=chrome&ie=UTF-8">General Covid</a>
             </div>
           </div>
         </footer>
@@ -154,14 +154,7 @@ loss of taste or smell.</p>
             }
         }
         
-        function makechart() {
-            
-            labels = ['nyc','moscow','france','iran','turkey'];
-            data = [210000,207000,150000,120000,75000];
 
-            new Chart(document.getElementById("chartjs-2"),{"type":"horizontalBar","data":{"labels": labels,"datasets":[{"label":"Top Five Bar Chart","data": data,"fill":false,"backgroundColor":["rgba(0, 255, 0, 0.5)","rgba(255, 159, 64, 0.5)","rgba(255, 205, 86, 0.5)","rgba(75, 192, 192, 0.2)","rgba(54, 162, 235, 0.5)","rgba(153, 102, 255, 0.5)","rgba(201, 203, 207, 0.5)"],"borderColor":["rgb(255, 99, 132)","rgb(255, 159, 64)","rgb(255, 205, 86)","rgb(75, 192, 192)","rgb(54, 162, 235)","rgb(153, 102, 255)","rgb(201, 203, 207)"],"borderWidth":1}]},"options":{"scales":{"xAxes":[{"ticks":{"beginAtZero":true}}]}}});
-            
-        }
     
         
     </script>
